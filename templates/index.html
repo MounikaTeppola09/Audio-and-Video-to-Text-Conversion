@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio/Video to Text Conversion</title>
+    <style>
+        /* Your existing styles here */
+        body {
+            background: linear-gradient(to bottom, #87CEEB, #000080);
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        #container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            padding: 20px;
+            width: 400px; /* Adjust the width as needed */
+        }
+
+        h1 {
+            color: #00FFFF;
+            margin-bottom: 15px;
+            font-style: italic;
+            font-size: larger;
+        }
+
+        label, input, button {
+            margin: 10px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label[for="input_file"] {
+            cursor: pointer;
+            padding: 10px;
+            background-color: #4682B4;
+            border-radius: 5px;
+            color: white;
+            font-style: oblique;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4682B4;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+        }
+
+        p {
+            margin-top: 20px;
+            color: #32CD32;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .message {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>"Transforming Audio and Video Content into Textual Format"</h1>
+        <form method="post" action="{{ url_for('process') }}" enctype="multipart/form-data">
+            <label for="input_file">Choose a local AUDIO or VIDEO file</label>
+            <input type="file" id="input_file" name="input_file" accept=".mp3, .mp4, .avi, .mov" required onchange="displayFileName()">
+            <button type="submit">Convert</button>
+        </form>
+        <p id="selected_file_info" style="color: rgb(102, 0, 255);"></p>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        {% if message %}
+            <p class="message">{{ message }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function displayFileName() {
+            var input = document.getElementById('input_file');
+            var fileInfo = document.getElementById('selected_file_info');
+            fileInfo.innerHTML = 'File selected: ' + input.files[0].name;
+        }
+    </script>
+    <!-- Add this line where you want to display the selected file name -->
+    <p id="selected_file_info" style="color: rgb(136, 0, 255);">{{ file_name }}</p>
+
+</body>
+</html>
+
